@@ -1,0 +1,162 @@
+{
+  "services": [
+    {
+      "id": "s_1",
+      "name": "The Royalty Bridal Package (White Wedding)",
+      "category": "bridal",
+      "starting_price": 450,
+      "duration": "4 Hours",
+      "description": "Luxurious, long-lasting wedding day glam. Includes full skin preparation, flawless waterproof base, customizable high-definition look, premium lash application, and a touch-up mini kit. Perfect for the modern luxury bride.",
+      "popular": true
+    },
+    {
+      "id": "s_2",
+      "name": "The Heritage Bridal Glam (Traditional African)",
+      "category": "bridal",
+      "starting_price": 500,
+      "duration": "5 Hours",
+      "description": "Exquisite bridal artistry celebrating rich heritage. Perfect match for Yoruba, Hausa, Igbo, Edo, and diverse traditional styles. Designed to resist sweat and shine under vibrant venue lighting and look majestic on camera. Includes Gele placement assistance.",
+      "popular": false
+    },
+    {
+      "id": "s_3",
+      "name": "Cinematic Film & Television Artistry",
+      "category": "film_production",
+      "starting_price": 800,
+      "duration": "Day Rate",
+      "description": "Screen-ready makeup designed precisely for high-definition 8K camera lenses. Includes active color matching, sweat-resistant matte properties, and consistent on-set touch-ups to ensure absolute continuity between scenes.",
+      "popular": true
+    },
+    {
+      "id": "s_4",
+      "name": "High-Fashion Editorial & Runway Prep",
+      "category": "editorial_shoot",
+      "starting_price": 350,
+      "duration": "3 Hours",
+      "description": "Uninhibited, creative contouring and high-impact styles designed to align with commercial fashion briefs, magazine spreads, and rapid runway changes.",
+      "popular": false
+    },
+    {
+      "id": "s_5",
+      "name": "Bespoke Creative & SFX Artistry",
+      "category": "creative_glam",
+      "starting_price": 300,
+      "duration": "3 Hours",
+      "description": "Character-focused depth modeling, realistic prosthetics, and avant-garde designs tailored for theatrical lookbooks or creative productions.",
+      "popular": false
+    }
+  ],
+  "portfolioItems": [
+    {
+      "id": "p_1",
+      "title": "Lagos Sunset Fashion Editorial",
+      "image_url": "https://images.unsplash.com/photo-1628191140356-91253457a8bf?q=80&w=1200&auto=format&fit=crop",
+      "description": "Vibrant custom blended eye shadows combining warm terracotta red, sunset yellow highlights, and premium mink flares.",
+      "category": "Editorial Shoot",
+      "featured": true
+    },
+    {
+      "id": "p_2",
+      "title": "Pure Radiance Minimalist Glow",
+      "image_url": "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=1200&auto=format&fit=crop",
+      "description": "Luminous, glass-like hyper-hydrated skin barrier base topped with soft pastel rose highlights on cheeks and inner eye corners.",
+      "category": "Bridal",
+      "featured": true
+    },
+    {
+      "id": "p_3",
+      "title": "Traditional Fulani Glow",
+      "image_url": "https://images.unsplash.com/photo-1628191140375-7f12e84c98f9?q=80&w=1200&auto=format&fit=crop",
+      "description": "Regal traditional bridal look featuring rich bronze sculpt, dual-tone metallic copper lids, bold lash architecture, and gold bead highlights.",
+      "category": "Bridal",
+      "featured": true
+    },
+    {
+      "id": "p_4",
+      "title": "Cinematic Studio Setup",
+      "image_url": "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?q=80&w=1200&auto=format&fit=crop",
+      "description": "Set-ready makeup for a lead actor under studio lighting. Matte HD base, neutral contour, and subtle warm tones designed for continuity across multiple takes.",
+      "category": "Film Production",
+      "featured": true
+    },
+    {
+      "id": "p_5",
+      "title": "Avant-Garde Creative Editorial",
+      "image_url": "https://images.unsplash.com/photo-1524250502761-1ac6f2e30129?q=80&w=1200&auto=format&fit=crop",
+      "description": "Bold creative look for an avant-garde fashion editorial. Graphic color blocking, metallic accents, and sculptural contouring for a high-impact visual statement.",
+      "category": "Creative Glam",
+      "featured": true
+    },
+    {
+      "id": "p_6",
+      "title": "Runway Fashion Show Glam",
+      "image_url": "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?q=80&w=1200&auto=format&fit=crop",
+      "description": "High-impact runway look designed to read boldly from the catwalk. Strong brow architecture, luminous skin finish, and a statement lip that anchors the collection.",
+      "category": "Fashion Show",
+      "featured": false
+    },
+    {
+      "id": "p_7",
+      "title": "Editorial Beauty Portrait",
+      "image_url": "https://images.unsplash.com/photo-1506795847402-ddc1c731e0f3?q=80&w=1200&auto=format&fit=crop",
+      "description": "Soft-focus editorial beauty with feather-stroked brows, warm bronze sculpting, and a luminous satin lip. Clean, modern, and camera-ready.",
+      "category": "Editorial Shoot",
+      "featured": false
+    }
+  ],
+  "blogPosts": [
+    {
+      "id": "blog_1",
+      "title": "Bridal Prep: Skincare Secrets for a Flawless Foundation",
+      "content": "Every bride wants their makeup to look flawless and last all day. The secret isn't just in the foundation—it's in the skin preparation. Learn how to optimize your skin barrier in the 4 weeks leading up to your wedding to ensure Pat McGrath or NARS pigments sit beautifully and absorb seamlessly under high-flash studio cameras.",
+      "category": "skincare",
+      "published_at": "June 5, 2026"
+    },
+    {
+      "id": "blog_2",
+      "title": "Designing the Perfect Screen Look: HD Camera Matching",
+      "content": "Makeup for film and television requires a completely different approach than bridal or everyday glam. With 8K digital cameras capturing every pore, the technique must focus on high-definition matte layering, color-correction gradients, and sweat-proofing. Here, we outline the exact on-set touch-up routines we use for lead actors to guarantee screen continuity.",
+      "category": "pro_tips",
+      "published_at": "May 28, 2026"
+    }
+  ],
+  "testimonials": [
+    {
+      "id": "t_1",
+      "name": "Sarah Adeleke",
+      "role": "Bride (September 2025)",
+      "content": "Joann was an absolute dream to work with! Her calm presence kept me completely relaxed on what could have been a very stressful morning. My makeup was absolutely stunning, photographed beautifully, and literally lasted from 8 AM until the late-night reception. Simply flawless!"
+    },
+    {
+      "id": "t_2",
+      "name": "Director David Cole",
+      "role": "Feature Film Director",
+      "content": "For our latest production, we needed an artist who understood camera-matching and continuity under heavy studio lighting. Joann delivered exceptional work. She worked collaboratively with our camera team, kept actors looking screen-ready between cuts, and maintained an incredible professional composure under tight shoot schedules."
+    },
+    {
+      "id": "t_3",
+      "name": "Amara Okafor",
+      "role": "Fashion Editor, Vanguard Style",
+      "content": "Joann's editorial work is exceptional. She has a rare ability to interpret a creative brief and elevate it beyond what you imagined. Her color theory knowledge and precision with graphic looks made our last fashion spread absolutely pop. I look forward to every collaboration."
+    },
+    {
+      "id": "t_4",
+      "name": "Bayo Alabi",
+      "role": "Commercial Producer",
+      "content": "We hired Joann for a high-budget commercial shoot and she exceeded every expectation. Her understanding of broadcast makeup requirements — no shine, perfect skin tones under varied lighting, and fast touch-ups between takes — saved us valuable production time. Highly professional."
+    },
+    {
+      "id": "t_5",
+      "name": "Chioma Eze",
+      "role": "Bridal Client (Traditional Wedding)",
+      "content": "My traditional wedding had three different outfit changes and Joann adapted my look flawlessly for each one. From the red coral lip for the church ceremony to the soft bronze glow for the reception, every transition was seamless. I felt like a queen all day."
+    }
+  ],
+  "inquiries": [],
+  "settings": {
+    "showPricing": false,
+    "adminUsers": [
+      { "id": "master_1", "username": "admin", "password": "admin123", "isMaster": true }
+    ]
+  }
+}
