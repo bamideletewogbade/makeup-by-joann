@@ -44,6 +44,24 @@
       "duration": "3 Hours",
       "description": "Character-focused depth modeling, realistic prosthetics, and avant-garde designs tailored for theatrical lookbooks or creative productions.",
       "popular": false
+    },
+    {
+      "id": "s_6",
+      "name": "The Bridal Party Experience",
+      "category": "bridal",
+      "starting_price": 250,
+      "duration": "2 Hours Per Person",
+      "description": "Group bridal party package: mother of the bride, bridesmaids, and flower girl. Coordinated looks that complement the bride while giving each person their own tailored style. Includes a trial session for the full party.",
+      "popular": false
+    },
+    {
+      "id": "s_7",
+      "name": "Quick Glam Touch-Up Service",
+      "category": "creative_glam",
+      "starting_price": 120,
+      "duration": "1 Hour",
+      "description": "Perfect for evening events, red carpets, or post-work photoshoots. Fast turnaround with a fresh, polished look: flawless base refresh, defined brows, subtle shimmer, and a statement lip.",
+      "popular": false
     }
   ],
   "portfolioItems": [
@@ -118,6 +136,27 @@
       "content": "Makeup for film and television requires a completely different approach than bridal or everyday glam. With 8K digital cameras capturing every pore, the technique must focus on high-definition matte layering, color-correction gradients, and sweat-proofing. Here, we outline the exact on-set touch-up routines we use for lead actors to guarantee screen continuity.",
       "category": "pro_tips",
       "published_at": "May 28, 2026"
+    },
+    {
+      "id": "blog_3",
+      "title": "Skincare Prep for Melanin-Rich Skin: What Actually Works",
+      "content": "Melanin-rich skin has unique needs when it comes to makeup preparation. Hyperpigmentation, uneven texture, and ashiness are common concerns that the right prep routine can address. In this guide, we break down the essential steps — from gentle exfoliation with lactic acid to the best hydrating primers for dark skin tones — that ensure your makeup sits flawlessly and lasts all day.",
+      "category": "skincare",
+      "published_at": "June 2, 2026"
+    },
+    {
+      "id": "blog_4",
+      "title": "How to Prep for Your Bridal Makeup Trial",
+      "content": "Your bridal makeup trial is one of the most important appointments before the big day. Come with clean, moisturized skin, bring inspiration photos of Black brides with similar features, and don\"t be afraid to speak up about what you love or want to change. We walk you through exactly what to expect during a luxury bridal trial and how to get the most out of your session with Joann.",
+      "category": "bridal",
+      "published_at": "May 20, 2026"
+    },
+    {
+      "id": "blog_5",
+      "title": "The Best Makeup Products for Dark Skin Tones in 2026",
+      "content": "Finding the right foundation shade, the perfect nude lip, or a bronzer that doesn\"t look ashy can be a challenge. We\"ve curated a list of our go-to products for deep skin tones — from Pat McGrath\"s foundation range to Fenty\"s contour sticks and NARS\" blushes that pop beautifully on melanin-rich complexions. These are the products Joann reaches for on every shoot.",
+      "category": "pro_tips",
+      "published_at": "June 10, 2026"
     }
   ],
   "testimonials": [
@@ -152,9 +191,60 @@
       "content": "My traditional wedding had three different outfit changes and Joann adapted my look flawlessly for each one. From the red coral lip for the church ceremony to the soft bronze glow for the reception, every transition was seamless. I felt like a queen all day."
     }
   ],
-  "inquiries": [],
+  "inquiries": [
+    {
+      "id": "inq_1",
+      "name": "Amara Osei",
+      "email": "amara.osei@email.com",
+      "phone": "+233 55 123 4567",
+      "event_date": "December 15, 2026",
+      "event_type": "wedding",
+      "budget_range": "$500 - $800",
+      "message": "I am getting married in December and would love to book you for my bridal makeup. I will have a traditional ceremony in the morning and a white wedding in the afternoon. I need two looks and someone who understands how to make my melanin skin absolutely glow under both natural light and indoor photography. Please let me know your availability!",
+      "status": "new",
+      "score": 92,
+      "ai_tags": ["bridal", "high_budget", "traditional_wedding", "double_look"],
+      "created_at": "2026-06-10T09:23:00.000Z"
+    },
+    {
+      "id": "inq_2",
+      "name": "David Mensah",
+      "email": "david.mensah@production.com",
+      "phone": "+233 20 987 6543",
+      "event_date": "July 20, 2026",
+      "event_type": "film_production",
+      "budget_range": "$1,000 - $2,000",
+      "message": "We are a film production company shooting a feature film in Accra. We need a makeup artist for our lead cast (3 actors) for a 2-week shoot. Experience with HD camera-ready makeup for dark skin tones is essential. The production includes both day and night shoots. Can you share your day rate and availability for late July?",
+      "status": "new",
+      "score": 88,
+      "ai_tags": ["film_production", "high_budget", "multi_actor", "onsite"],
+      "created_at": "2026-06-09T14:45:00.000Z"
+    },
+    {
+      "id": "inq_3",
+      "name": "Fatima Ibrahim",
+      "email": "fatima.i@stylestudio.com",
+      "phone": null,
+      "event_date": "August 5, 2026",
+      "event_type": "editorial_shoot",
+      "budget_range": "$400 - $600",
+      "message": "Hello! I'm a fashion editor working on a spread for a lifestyle magazine featuring African textiles and modern fashion. We need a makeup artist for a one-day editorial shoot with 2 models. The theme is 'Modern Afro-Futurism' and we need bold, creative looks with metallics and graphic elements. Would love to see your editorial portfolio!",
+      "status": "contacted",
+      "score": 75,
+      "ai_tags": ["editorial", "creative", "magazine", "moderate_budget"],
+      "created_at": "2026-06-05T11:30:00.000Z"
+    }
+  ],
   "settings": {
     "showPricing": false,
+    "homepageSections": {
+      "portfolio": true,
+      "services": true,
+      "flickr": true,
+      "creativeLab": true,
+      "testimonials": true,
+      "portfolioCount": 3
+    },
     "adminUsers": [
       { "id": "master_1", "username": "admin", "password": "admin123", "isMaster": true }
     ]

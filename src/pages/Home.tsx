@@ -81,6 +81,7 @@ export default function Home({ onNavigate }: HomeProps) {
   const [loading, setLoading] = useState(true);
   const [activeScene, setActiveScene] = useState(0);
   const [sliderPosition, setSliderPosition] = useState(45);
+  const [homepageSections, setHomepageSections] = useState<Record<string, any>>({});
 
   // Auto-rotate hero scenes
   useEffect(() => {
@@ -93,11 +94,12 @@ export default function Home({ onNavigate }: HomeProps) {
   useEffect(() => {
     async function loadData() {
       try {
-        const [resS, resP, resT, resF] = await Promise.all([
+        const [resS, resP, resT, resF, resSet] = await Promise.all([
           fetch('/api/services'),
           fetch('/api/portfolio'),
           fetch('/api/testimonials'),
           fetch('/api/flickr'),
+          fetch('/api/settings'),
         ]);
         if (resS.ok) setServices(await resS.json());
         if (resP.ok) {
@@ -108,6 +110,10 @@ export default function Home({ onNavigate }: HomeProps) {
         if (resF.ok) {
           const rawF = await resF.json();
           setFlickrItems(rawF.slice(0, 8));
+        }
+        if (resSet.ok) {
+          const settings = await resSet.json();
+          setHomepageSections(settings.homepageSections || {});
         }
       } catch (err) {
         console.error("Error loading home data:", err);
@@ -368,6 +374,7 @@ export default function Home({ onNavigate }: HomeProps) {
       </section>
 
       {/* ─── 2. PORTFOLIO PREVIEW ─── */}
+      {homepageSections.portfolio !== false && (
       <section className="py-24 w-full px-6 sm:px-12">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div className="space-y-4 text-left">
@@ -402,7 +409,7 @@ export default function Home({ onNavigate }: HomeProps) {
               <p className="text-sm text-zinc-400 font-light">Portfolio images coming soon.</p>
             </div>
           ) : (
-            portfolio.slice(0, 3).map((item, index) => (
+            portfolio.slice(0, homepageSections.portfolioCount || 3).map((item, index) => (
               <motion.div
                 key={item.id}
                 initial={{ opacity: 0, y: 20 }}
@@ -442,8 +449,10 @@ export default function Home({ onNavigate }: HomeProps) {
           )}
         </div>
       </section>
+      )}
 
       {/* ─── 3. SERVICES PREVIEW ─── */}
+      {homepageSections.services !== false && (
       <section className="py-24 w-full px-6 sm:px-12">
           <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
@@ -513,6 +522,7 @@ export default function Home({ onNavigate }: HomeProps) {
             </button>
           </div>
         </section>
+      )}
 
       {/* ─── 4. TRUST & EXPERIENCE ─── */}
       <section className="bg-[#0D0D0D] border-t border-b border-white/5 py-24">
@@ -562,6 +572,7 @@ export default function Home({ onNavigate }: HomeProps) {
       </section>
 
       {/* ─── 5. FLICKR MEDIA GALLERY ─── */}
+      {homepageSections.flickr !== false && (
       <section className="py-24 bg-black/40 border-t border-b border-white/5 overflow-hidden">
         <div className="w-full px-6 sm:px-12 mb-16">
           <div className="max-w-7xl mx-auto">
@@ -663,8 +674,10 @@ export default function Home({ onNavigate }: HomeProps) {
           </div>
         </div>
       </section>
+      )}
 
       {/* ─── 6. AI CREATIVE LAB TEASER ─── */}
+      {homepageSections.creativeLab !== false && (
       <section className="py-20 w-full px-6 sm:px-12">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           <div className="space-y-5 text-left">
@@ -728,8 +741,10 @@ export default function Home({ onNavigate }: HomeProps) {
           </div>
         </div>
       </section>
+      )}
 
       {/* ─── 6. TESTIMONIALS ─── */}
+      {homepageSections.testimonials !== false && (
       <section className="py-24 bg-[#0D0D0D] border-t border-b border-white/5">
         <div className="w-full px-6 sm:px-12">
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
@@ -767,6 +782,7 @@ export default function Home({ onNavigate }: HomeProps) {
           </div>
         </div>
       </section>
+      )}
 
       {/* ─── 7. BOTTOM CTA ─── */}
       <section className="py-28 relative overflow-hidden bg-background border-b border-white/5 text-center">

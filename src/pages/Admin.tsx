@@ -45,6 +45,7 @@ const SECTIONS = [
   { id: 'blogs', label: 'Blog Posts', icon: FileText },
   { id: 'testimonials', label: 'Testimonials', icon: Star },
   { id: 'inquiries', label: 'Inquiries', icon: MessageSquare },
+  { id: 'homepage', label: 'Homepage', icon: LayoutDashboard },
   { id: 'settings', label: 'Settings', icon: Settings },
 ]
 
@@ -884,6 +885,77 @@ export default function Admin() {
                     </motion.div>
                   ))}
                 {inquiries.length === 0 && <p className="text-sm text-gray-500 text-center py-10">No inquiries yet.</p>}
+              </div>
+            </motion.div>
+          )}
+
+          {/* ────── HOMEPAGE ────── */}
+          {section === 'homepage' && (
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+              <div className="mb-8">
+                <h1 className="font-heading text-2xl font-semibold text-foreground">Homepage</h1>
+                <p className="text-xs text-gray-500 mt-1">Control which sections appear on the home page</p>
+              </div>
+
+              <div className="space-y-4">
+                <p className="text-[10px] uppercase tracking-widest text-gray-500 font-semibold">Section Visibility</p>
+
+                {[
+                  { key: 'portfolio', label: 'Portfolio Preview', desc: 'Featured work gallery showcasing recent portfolio items' },
+                  { key: 'services', label: 'Services Preview', desc: 'Highlighted service packages and pricing' },
+                  { key: 'flickr', label: 'Flickr Gallery', desc: 'Live photo feed from the studio Flickr stream' },
+                  { key: 'creativeLab', label: 'Creative Lab', desc: 'AI Style Quiz & Virtual Try-On teaser section' },
+                  { key: 'testimonials', label: 'Testimonials', desc: 'Client reviews and testimonials section' },
+                ].map(sec => {
+                  const sections = settings.homepageSections || {}
+                  const visible = sections[sec.key] !== false
+                  return (
+                    <div key={sec.key} className="bg-[#111] border border-white/5 rounded-xl p-5 flex items-center justify-between group hover:border-white/10 transition-all">
+                      <div>
+                        <h3 className="text-sm font-semibold text-foreground">{sec.label}</h3>
+                        <p className="text-xs text-gray-500 mt-0.5">{sec.desc}</p>
+                      </div>
+                      <button
+                        onClick={() => {
+                          const current = settings.homepageSections || {}
+                          const updated = { ...settings, homepageSections: { ...current, [sec.key]: !visible } }
+                          saveSettings(updated)
+                        }}
+                        className={`relative w-12 h-6 rounded-full transition-all shrink-0 ${visible ? 'bg-primary' : 'bg-white/10'}`}
+                      >
+                        <div className={`absolute top-0.5 w-5 h-5 rounded-full bg-white transition-all ${visible ? 'left-6' : 'left-0.5'}`} />
+                      </button>
+                    </div>
+                  )
+                })}
+
+                {/* Portfolio count control */}
+                <div className="bg-[#111] border border-white/5 rounded-xl p-5">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="text-sm font-semibold text-foreground">Portfolio Items to Show</h3>
+                      <p className="text-xs text-gray-500 mt-0.5">Number of featured portfolio items displayed on the home page</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {[3, 6, 9].map(n => (
+                        <button
+                          key={n}
+                          onClick={() => {
+                            const current = settings.homepageSections || {}
+                            saveSettings({ ...settings, homepageSections: { ...current, portfolioCount: n } })
+                          }}
+                          className={`px-3 py-1.5 text-xs rounded-lg transition-all cursor-pointer ${
+                            (settings.homepageSections?.portfolioCount || 3) === n
+                              ? 'bg-primary text-black font-bold'
+                              : 'bg-white/5 text-gray-400 hover:text-white'
+                          }`}
+                        >
+                          {n}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
             </motion.div>
           )}
