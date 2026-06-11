@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Camera, Upload, Sparkles, RefreshCw, Wand2, Info, Check, Image as ImageIcon, Download, ArrowLeft, Heart } from 'lucide-react';
+import CursorGlow from '../components/CursorGlow';
 
 const STYLES = [
   {
@@ -142,8 +143,9 @@ export default function VirtualTryOn() {
   };
 
   return (
-    <div className="bg-background text-foreground min-h-screen pt-32 pb-24">
-      <div className="w-full px-6">
+    <div className="bg-background text-foreground min-h-screen pt-32 pb-24 relative overflow-hidden">
+      <CursorGlow color="rgba(212, 163, 115, 0.1)" size={500} opacity={0.7} zIndex={0} particles />
+      <div className="w-full px-6 relative z-10">
         
         {/* Title */}
         <div className="text-center mb-12 space-y-4">

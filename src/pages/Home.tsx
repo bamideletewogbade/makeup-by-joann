@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles, Calendar, ChevronRight, Star, Heart, Palette, Camera, Image as ImageIcon } from 'lucide-react';
+import { Sparkles, Calendar, ChevronRight, Star, Heart, Palette, Camera, MessageCircle } from 'lucide-react';
+import CursorGlow from '../components/CursorGlow';
+import ScrollReveal from '../components/ScrollReveal';
 
 interface Service {
   id: string;
@@ -28,6 +30,7 @@ interface Testimonial {
   name: string;
   role: string;
   content: string;
+  image_url?: string;
 }
 
 interface HomeProps {
@@ -77,7 +80,6 @@ export default function Home({ onNavigate }: HomeProps) {
   const [services, setServices] = useState<Service[]>([]);
   const [portfolio, setPortfolio] = useState<PortfolioItem[]>([]);
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
-  const [flickrItems, setFlickrItems] = useState<PortfolioItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeScene, setActiveScene] = useState(0);
   const [sliderPosition, setSliderPosition] = useState(45);
@@ -94,23 +96,25 @@ export default function Home({ onNavigate }: HomeProps) {
   useEffect(() => {
     async function loadData() {
       try {
-        const [resS, resP, resT, resF, resSet] = await Promise.all([
+        const [resS, resT, resF, resSet] = await Promise.all([
           fetch('/api/services'),
-          fetch('/api/portfolio'),
           fetch('/api/testimonials'),
           fetch('/api/flickr'),
           fetch('/api/settings'),
         ]);
         if (resS.ok) setServices(await resS.json());
-        if (resP.ok) {
-          const rawP = await resP.json();
-          setPortfolio(rawP.filter((item: PortfolioItem) => item.featured));
-        }
         if (resT.ok) setTestimonials(await resT.json());
         if (resF.ok) {
           const rawF = await resF.json();
-          setFlickrItems(rawF.slice(0, 8));
+          // Portfolio preview uses Flickr images
+          const previewItems = rawF.slice(0, 6).map((item: PortfolioItem) => ({
+            ...item,
+            category: 'Studio Feed',
+            featured: true
+          }));
+          setPortfolio(previewItems);
         }
+
         if (resSet.ok) {
           const settings = await resSet.json();
           setHomepageSections(settings.homepageSections || {});
@@ -130,7 +134,9 @@ export default function Home({ onNavigate }: HomeProps) {
     <div className="flex flex-col bg-background text-foreground overflow-hidden">
 
       {/* ─── 1. HERO ─── */}
-      <section className="relative min-h-screen flex items-center pt-24 bg-background text-foreground overflow-hidden">
+      <section className="relative min-h-screen flex items-center pt-24 bg-background text-foreground overflow-hidden group/hero">
+        {/* Mouse-following glow */}
+        <CursorGlow color="rgba(212, 163, 115, 0.12)" size={600} opacity={0.8} zIndex={1} particles />
         {/* Background image */}
         <div className="absolute inset-0 z-0 opacity-30 transition-all duration-1000">
           <img
@@ -377,7 +383,7 @@ export default function Home({ onNavigate }: HomeProps) {
       {homepageSections.portfolio !== false && (
       <section className="py-24 w-full px-6 sm:px-12">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-          <div className="space-y-4 text-left">
+          <ScrollReveal animation="left" delay={0.1} className="space-y-4 text-left">
             <span className="text-primary uppercase tracking-widest text-xs font-semibold font-mono">
               Featured Work
             </span>
@@ -389,13 +395,15 @@ export default function Home({ onNavigate }: HomeProps) {
               A selection of recent work from film sets, bridal celebrations, and editorial shoots.
               Each look is uniquely tailored to the client and occasion.
             </p>
-          </div>
-          <button
-            onClick={() => onNavigate('portfolio')}
-            className="border border-white/20 hover:border-primary text-foreground hover:text-primary text-xs uppercase tracking-widest font-semibold py-3 px-6 rounded-lg transition-all flex items-center gap-1 shrink-0 self-start md:self-auto cursor-pointer"
-          >
-            View Full Portfolio <ChevronRight className="h-4 w-4" />
-          </button>
+          </ScrollReveal>
+          <ScrollReveal animation="right" delay={0.2}>
+            <button
+              onClick={() => onNavigate('portfolio')}
+              className="border border-white/20 hover:border-primary text-foreground hover:text-primary text-xs uppercase tracking-widest font-semibold py-3 px-6 rounded-lg transition-all flex items-center gap-1 shrink-0 self-start md:self-auto cursor-pointer"
+            >
+              View Full Portfolio <ChevronRight className="h-4 w-4" />
+            </button>
+          </ScrollReveal>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -410,12 +418,8 @@ export default function Home({ onNavigate }: HomeProps) {
             </div>
           ) : (
             portfolio.slice(0, homepageSections.portfolioCount || 3).map((item, index) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+              <ScrollReveal key={item.id} animation="up" delay={0.1} staggerIndex={index} staggerDelay={0.1}>
+              <div
                 className="group bg-[#111] border border-white/5 rounded-3xl overflow-hidden hover:border-primary/20 transition-all duration-300"
               >
                 <div className="relative h-64 overflow-hidden bg-zinc-900">
@@ -444,16 +448,16 @@ export default function Home({ onNavigate }: HomeProps) {
                     Inquire About This Look →
                   </button>
                 </div>
-              </motion.div>
-            ))
-          )}
-        </div>
-      </section>
+              </div>
+            </ScrollReveal>
+            )))}
+          </div>
+        </section>
       )}
 
       {/* ─── 3. SERVICES PREVIEW ─── */}
       {homepageSections.services !== false && (
-      <section className="py-24 w-full px-6 sm:px-12">
+      <ScrollReveal animation="up" className="py-24 w-full px-6 sm:px-12">
           <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
             <span className="text-primary uppercase tracking-widest text-xs font-semibold">Services</span>
@@ -521,11 +525,11 @@ export default function Home({ onNavigate }: HomeProps) {
               View All Services
             </button>
           </div>
-        </section>
+        </ScrollReveal>
       )}
 
       {/* ─── 4. TRUST & EXPERIENCE ─── */}
-      <section className="bg-[#0D0D0D] border-t border-b border-white/5 py-24">
+      <ScrollReveal animation="fade" className="bg-[#0D0D0D] border-t border-b border-white/5 py-24">
         <div className="w-full px-6 sm:px-12">
           <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
@@ -569,116 +573,11 @@ export default function Home({ onNavigate }: HomeProps) {
           </div>
           </div>
         </div>
-      </section>
+      </ScrollReveal>
 
-      {/* ─── 5. FLICKR MEDIA GALLERY ─── */}
-      {homepageSections.flickr !== false && (
-      <section className="py-24 bg-black/40 border-t border-b border-white/5 overflow-hidden">
-        <div className="w-full px-6 sm:px-12 mb-16">
-          <div className="max-w-7xl mx-auto">
-          <div className="text-center max-w-2xl mx-auto space-y-4">
-            <span className="text-primary uppercase tracking-widest text-xs font-semibold font-mono">
-              Live from the Studio
-            </span>
-            <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight">
-              Beauty in <span className="italic font-serif text-primary">Action</span>
-            </h2>
-            <div className="w-16 h-[1.5px] bg-primary mx-auto my-3" />
-            <p className="text-xs sm:text-sm text-gray-300 font-light max-w-lg mx-auto leading-relaxed">
-              Behind-the-scenes moments, backstage preparations, and finished looks from film sets, bridal celebrations, and editorial shoots.
-            </p>
-          </div>
-          </div>
-        </div>
-
-        <div className="w-full px-6 sm:px-12">
-          <div className="max-w-7xl mx-auto">
-          {flickrItems.length === 0 ? (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {[1,2,3,4,5,6,7,8].map(i => (
-                <div key={i} className="animate-pulse bg-white/5 aspect-square rounded-2xl" />
-              ))}
-            </div>
-          ) : (
-            <>
-              {/* Hero row - 2 large images */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                {flickrItems.slice(0, 2).map((item, i) => (
-                  <motion.div
-                    key={item.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: i * 0.1 }}
-                    className="relative group rounded-2xl overflow-hidden bg-[#111] border border-white/5 aspect-[4/3] md:aspect-[16/10]"
-                  >
-                    <img
-                      src={item.image_url}
-                      alt={item.title}
-                      referrerPolicy="no-referrer"
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <div className="absolute bottom-0 left-0 right-0 p-5 translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
-                      <p className="text-xs text-white font-medium line-clamp-2">{item.title}</p>
-                      <span className="text-[9px] text-primary uppercase tracking-widest mt-1 block">
-                        {item.tags?.[0] || 'Photography'}
-                      </span>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Grid row - 6 smaller images */}
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                {flickrItems.slice(2, 8).map((item, i) => (
-                  <motion.div
-                    key={item.id}
-                    initial={{ opacity: 0, y: 15 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: i * 0.05 }}
-                    className="relative group rounded-xl overflow-hidden bg-[#111] border border-white/5 aspect-square"
-                  >
-                    <img
-                      src={item.image_url}
-                      alt={item.title}
-                      referrerPolicy="no-referrer"
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <span className="text-[9px] text-white uppercase tracking-widest font-bold px-3 py-1.5 bg-primary/80 text-black rounded-full">
-                        View
-                      </span>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Flickr CTA */}
-              <div className="text-center mt-10">
-                <a
-                  href="https://www.flickr.com/photos/beautybyjoann/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-xs text-zinc-400 hover:text-primary transition-colors font-mono tracking-widest uppercase"
-                >
-                  <ImageIcon className="h-3.5 w-3.5" />
-                  View more on Flickr
-                </a>
-              </div>
-            </>
-          )}
-          </div>
-        </div>
-      </section>
-      )}
-
-      {/* ─── 6. AI CREATIVE LAB TEASER ─── */}
+      {/* ─── 5. AI CREATIVE LAB TEASER ─── */}
       {homepageSections.creativeLab !== false && (
-      <section className="py-20 w-full px-6 sm:px-12">
+      <ScrollReveal animation="up" className="py-20 w-full px-6 sm:px-12">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           <div className="space-y-5 text-left">
             <div className="flex items-center gap-2 text-primary">
@@ -740,12 +639,12 @@ export default function Home({ onNavigate }: HomeProps) {
             </div>
           </div>
         </div>
-      </section>
+      </ScrollReveal>
       )}
 
       {/* ─── 6. TESTIMONIALS ─── */}
       {homepageSections.testimonials !== false && (
-      <section className="py-24 bg-[#0D0D0D] border-t border-b border-white/5">
+      <ScrollReveal animation="fade" className="py-24 bg-[#0D0D0D] border-t border-b border-white/5">
         <div className="w-full px-6 sm:px-12">
           <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
             <span className="text-primary uppercase tracking-widest text-xs font-semibold">Testimonials</span>
@@ -761,31 +660,103 @@ export default function Home({ onNavigate }: HomeProps) {
                 Testimonials coming soon.
               </div>
             ) : (
-              testimonials.map((t) => (
-                <div key={t.id} className="p-8 bg-[#111] border border-white/5 rounded-3xl relative space-y-5">
-                  <span className="text-4xl text-primary font-serif absolute top-5 right-8 opacity-20">"</span>
-                  <p className="text-sm text-gray-300 font-light leading-relaxed italic pr-6">
-                    "{t.content}"
-                  </p>
-                  <div className="flex items-center gap-3.5 border-t border-white/5 pt-4">
-                    <div className="w-10 h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold text-xs uppercase">
-                      {t.name.split(' ').map(n => n[0]).join('')}
+              testimonials.map((t, idx) => (
+                <motion.div
+                  key={t.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: idx * 0.1 }}
+                  className="group bg-[#111] border border-white/5 rounded-3xl overflow-hidden relative flex flex-col md:flex-row hover:border-primary/20 transition-all duration-300"
+                >
+                  {/* Image side */}
+                  <div className="relative w-full md:w-44 h-48 md:h-auto shrink-0 overflow-hidden bg-zinc-900">
+                    {t.image_url ? (
+                      <img
+                        src={t.image_url}
+                        alt={t.name}
+                        referrerPolicy="no-referrer"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        loading="lazy"
+                        onError={(e) => {
+                          const target = e.currentTarget;
+                          target.style.display = 'none';
+                        }}
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-primary/10">
+                        <span className="text-3xl font-bold text-primary/40">
+                          {t.name.split(' ').map(n => n[0]).join('')}
+                        </span>
+                      </div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </div>
+
+                  {/* Content side */}
+                  <div className="flex-1 p-6 space-y-3">
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <h4 className="text-sm font-bold text-foreground group-hover:text-primary transition-colors">{t.name}</h4>
+                        <p className="text-[10px] text-zinc-500 uppercase tracking-wider mt-0.5">{t.role}</p>
+                      </div>
+                      <span className="text-4xl text-primary font-serif opacity-20 leading-none -mt-2">"</span>
                     </div>
-                    <div>
-                      <h4 className="text-xs font-bold text-foreground">{t.name}</h4>
-                      <p className="text-[10px] text-zinc-500 uppercase tracking-wider mt-0.5">{t.role}</p>
+                    <p className="text-xs text-gray-300 font-light leading-relaxed italic line-clamp-4">
+                      "{t.content}"
+                    </p>
+                    {/* Stars */}
+                    <div className="flex gap-0.5 text-primary">
+                      {[...Array(5)].map((_, i) => (
+                        <svg key={i} className="w-3 h-3 fill-current" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))
             )}
           </div>
         </div>
-      </section>
+      </ScrollReveal>
       )}
 
-      {/* ─── 7. BOTTOM CTA ─── */}
-      <section className="py-28 relative overflow-hidden bg-background border-b border-white/5 text-center">
+      {/* ─── 7. WHATSAPP SECTION ─── */}
+      <ScrollReveal animation="up" className="py-20 bg-[#0D0D0D] border-t border-b border-white/5">
+        <div className="w-full px-6 sm:px-12">
+          <div className="max-w-7xl mx-auto">
+          <div className="max-w-3xl mx-auto bg-[#111] border border-white/5 rounded-3xl p-8 md:p-12 text-center space-y-6">
+            <div className="w-16 h-16 rounded-full bg-[#25D366]/15 flex items-center justify-center mx-auto">
+              <MessageCircle className="h-8 w-8 text-[#25D366]" />
+            </div>
+            <div className="space-y-3">
+              <h2 className="font-heading text-2xl sm:text-3xl font-medium tracking-tight">
+                Chat with us on <span className="text-[#25D366]">WhatsApp</span>
+              </h2>
+              <p className="text-sm text-gray-400 font-light max-w-md mx-auto leading-relaxed">
+                Prefer to chat? Send us a message directly and we'll respond within minutes. 
+                No forms, no waiting — just real-time conversation.
+              </p>
+            </div>
+            <a
+              href="https://wa.me/233501234567?text=Hi%20Joann!%20I'd%20love%20to%20chat%20about%20your%20makeup%20services."
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 px-8 py-4 bg-[#25D366] hover:bg-[#20BD5A] text-white text-xs uppercase tracking-widest font-bold rounded-xl transition-all shadow-lg shadow-[#25D366]/20"
+            >
+              <MessageCircle className="h-5 w-5" /> Start a Conversation
+            </a>
+            <p className="text-[10px] text-zinc-600 font-light">
+              Typically responds within minutes • Free to message
+            </p>
+          </div>
+          </div>
+        </div>
+      </ScrollReveal>
+
+      {/* ─── 8. BOTTOM CTA ─── */}
+      <ScrollReveal animation="scale" className="py-28 relative overflow-hidden bg-background border-b border-white/5 text-center">
         <div className="w-full px-6 relative z-10 space-y-6">
           <span className="text-primary uppercase tracking-widest text-xs font-bold font-mono">Get Started</span>
           <h2 className="font-heading text-3xl sm:text-5xl font-medium tracking-tight">
@@ -806,8 +777,7 @@ export default function Home({ onNavigate }: HomeProps) {
             </motion.button>
           </div>
         </div>
-      </section>
-
+      </ScrollReveal>
     </div>
   );
 }

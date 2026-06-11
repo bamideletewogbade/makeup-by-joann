@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, ArrowRight, RefreshCw, Wand2, Info, Check, HelpCircle } from 'lucide-react';
+import CursorGlow from '../components/CursorGlow';
 
 const QUESTIONS = [
   {
@@ -108,8 +109,9 @@ export default function StyleQuiz() {
   const currentQuestion = QUESTIONS[currentStep];
 
   return (
-    <div className="bg-background text-foreground min-h-screen pt-32 pb-24">
-      <div className="w-full px-6">
+    <div className="bg-background text-foreground min-h-screen pt-32 pb-24 relative overflow-hidden">
+      <CursorGlow color="rgba(212, 163, 115, 0.1)" size={500} opacity={0.7} zIndex={0} particles />
+      <div className="w-full px-6 relative z-10">
         
         {/* Title */}
         <div className="text-center mb-12 space-y-4">

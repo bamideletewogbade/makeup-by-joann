@@ -903,7 +903,6 @@ export default function Admin() {
                 {[
                   { key: 'portfolio', label: 'Portfolio Preview', desc: 'Featured work gallery showcasing recent portfolio items' },
                   { key: 'services', label: 'Services Preview', desc: 'Highlighted service packages and pricing' },
-                  { key: 'flickr', label: 'Flickr Gallery', desc: 'Live photo feed from the studio Flickr stream' },
                   { key: 'creativeLab', label: 'Creative Lab', desc: 'AI Style Quiz & Virtual Try-On teaser section' },
                   { key: 'testimonials', label: 'Testimonials', desc: 'Client reviews and testimonials section' },
                 ].map(sec => {

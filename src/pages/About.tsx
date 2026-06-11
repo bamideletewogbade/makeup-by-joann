@@ -1,12 +1,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Heart, Sparkles, ShieldCheck, Smile } from 'lucide-react';
+import CursorGlow from '../components/CursorGlow';
 
 export default function About() {
   return (
-    <div className="bg-background text-foreground min-h-screen pt-32 pb-24">
+    <div className="bg-background text-foreground min-h-screen pt-32 pb-24 relative overflow-hidden">
+      <CursorGlow color="rgba(212, 163, 115, 0.1)" size={500} opacity={0.7} zIndex={0} particles />
       {/* Intro Hero Section */}
-      <section className="w-full px-6 sm:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-28">
+      <section className="w-full px-6 sm:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-28 relative z-10">
         
         {/* Left text */}
         <div className="lg:col-span-7 space-y-6 text-left">

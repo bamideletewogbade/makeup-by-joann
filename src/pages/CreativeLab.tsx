@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Sparkles, Wand2, Eye, ArrowRight } from 'lucide-react';
+import CursorGlow from '../components/CursorGlow';
 
 export default function CreativeLab() {
   const navigate = useNavigate();
@@ -27,8 +28,9 @@ export default function CreativeLab() {
   ];
 
   return (
-    <div className="bg-background text-foreground min-h-screen pt-32 pb-24">
-      <div className="w-full px-6 sm:px-12">
+    <div className="bg-background text-foreground min-h-screen pt-32 pb-24 relative overflow-hidden">
+      <CursorGlow color="rgba(212, 163, 115, 0.1)" size={500} opacity={0.7} zIndex={0} particles />
+      <div className="w-full px-6 sm:px-12 relative z-10">
         {/* Header */}
         <div className="text-center mb-16 space-y-4">
           <span className="text-primary uppercase tracking-widest text-xs font-semibold font-mono flex items-center justify-center gap-1.5">

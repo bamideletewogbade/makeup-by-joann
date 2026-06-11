@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Sparkles, Film, Heart, Camera, Palette, Theater, Calendar, Info } from 'lucide-react';
+import CursorGlow from '../components/CursorGlow';
+import ScrollReveal from '../components/ScrollReveal';
 
 interface Service {
   id: string;
@@ -74,9 +76,10 @@ export default function Services({ onNavigate }: ServicesProps) {
   }, []);
 
   return (
-    <div className="bg-background text-foreground min-h-screen pt-32 pb-24">
+    <div className="bg-background text-foreground min-h-screen pt-32 pb-24 relative overflow-hidden">
+      <CursorGlow color="rgba(212, 163, 115, 0.1)" size={500} opacity={0.7} zIndex={0} particles />
       {/* Page Header */}
-      <section className="w-full px-6 sm:px-12 text-center mb-16 space-y-4">
+      <ScrollReveal animation="fade" className="w-full px-6 sm:px-12 text-center mb-16 space-y-4 relative z-10">
         <span className="text-primary uppercase tracking-widest text-xs font-semibold font-mono">
           Services & Packages
         </span>
@@ -88,7 +91,7 @@ export default function Services({ onNavigate }: ServicesProps) {
           Expert makeup services for bridal, film and television, editorial shoots, fashion shows, and creative projects.
           Every look is tailored to you — from a wedding morning to a high-production set.
         </p>
-      </section>
+      </ScrollReveal>
 
       {/* Category Filters */}
       {!loading && categories.length > 1 && (
@@ -194,18 +197,12 @@ export default function Services({ onNavigate }: ServicesProps) {
                       </div>
                     </div>
 
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex gap-2">
                       <button
                         onClick={() => onNavigate('book')}
-                        className="px-5 py-3 bg-primary hover:bg-primary/95 text-black text-xs uppercase tracking-widest font-bold rounded-xl transition-all cursor-pointer flex items-center gap-1.5 shadow-md"
+                        className="px-6 py-3 bg-primary hover:bg-primary/95 text-black text-xs uppercase tracking-widest font-bold rounded-xl transition-all cursor-pointer flex items-center gap-1.5 shadow-md"
                       >
                         <Calendar className="h-3.5 w-3.5" /> Book Consultation
-                      </button>
-                      <button
-                        onClick={() => onNavigate('book')}
-                        className="px-5 py-3 bg-white/5 border border-white/10 hover:bg-white/10 text-xs uppercase tracking-widest font-semibold rounded-xl transition-all cursor-pointer"
-                      >
-                        Request Quote
                       </button>
                     </div>
                   </div>

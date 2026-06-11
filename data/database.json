@@ -164,31 +164,36 @@
       "id": "t_1",
       "name": "Sarah Adeleke",
       "role": "Bride (September 2025)",
-      "content": "Joann was an absolute dream to work with! Her calm presence kept me completely relaxed on what could have been a very stressful morning. My makeup was absolutely stunning, photographed beautifully, and literally lasted from 8 AM until the late-night reception. Simply flawless!"
+      "content": "Joann was an absolute dream to work with! Her calm presence kept me completely relaxed on what could have been a very stressful morning. My makeup was absolutely stunning, photographed beautifully, and literally lasted from 8 AM until the late-night reception. Simply flawless!",
+      "image_url": "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?q=80&w=400&h=400&fit=crop&crop=face"
     },
     {
       "id": "t_2",
-      "name": "Director David Cole",
-      "role": "Feature Film Director",
-      "content": "For our latest production, we needed an artist who understood camera-matching and continuity under heavy studio lighting. Joann delivered exceptional work. She worked collaboratively with our camera team, kept actors looking screen-ready between cuts, and maintained an incredible professional composure under tight shoot schedules."
+      "name": "Amara Okafor",
+      "role": "Fashion Editor, Vanguard Style",
+      "content": "Joann's editorial work is exceptional. She has a rare ability to interpret a creative brief and elevate it beyond what you imagined. Her color theory knowledge and precision with graphic looks made our last fashion spread absolutely pop.",
+      "image_url": "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=400&h=400&fit=crop&crop=face"
     },
     {
       "id": "t_3",
-      "name": "Amara Okafor",
-      "role": "Fashion Editor, Vanguard Style",
-      "content": "Joann's editorial work is exceptional. She has a rare ability to interpret a creative brief and elevate it beyond what you imagined. Her color theory knowledge and precision with graphic looks made our last fashion spread absolutely pop. I look forward to every collaboration."
+      "name": "Chioma Eze",
+      "role": "Bridal Client (Traditional Wedding)",
+      "content": "My traditional wedding had three different outfit changes and Joann adapted my look flawlessly for each one. From the red coral lip for the church ceremony to the soft bronze glow for the reception, every transition was seamless. I felt like a queen all day.",
+      "image_url": "https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?q=80&w=400&h=400&fit=crop&crop=face"
     },
     {
       "id": "t_4",
       "name": "Bayo Alabi",
       "role": "Commercial Producer",
-      "content": "We hired Joann for a high-budget commercial shoot and she exceeded every expectation. Her understanding of broadcast makeup requirements — no shine, perfect skin tones under varied lighting, and fast touch-ups between takes — saved us valuable production time. Highly professional."
+      "content": "We hired Joann for a high-budget commercial shoot and she exceeded every expectation. Her understanding of broadcast makeup requirements — no shine, perfect skin tones under varied lighting, and fast touch-ups between takes — saved us valuable production time.",
+      "image_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&h=400&fit=crop&crop=face"
     },
     {
       "id": "t_5",
-      "name": "Chioma Eze",
-      "role": "Bridal Client (Traditional Wedding)",
-      "content": "My traditional wedding had three different outfit changes and Joann adapted my look flawlessly for each one. From the red coral lip for the church ceremony to the soft bronze glow for the reception, every transition was seamless. I felt like a queen all day."
+      "name": "Ngozi Diallo",
+      "role": "Film Producer",
+      "content": "Joann is a consummate professional who understands the demands of a film set intimately. Her ability to work under pressure while maintaining the highest quality of artistry is remarkable. An absolute asset to any production crew.",
+      "image_url": "https://images.unsplash.com/photo-1504711434969-e33886168d8c?q=80&w=400&h=400&fit=crop&crop=face"
     }
   ],
   "inquiries": [
@@ -240,7 +245,6 @@
     "homepageSections": {
       "portfolio": true,
       "services": true,
-      "flickr": true,
       "creativeLab": true,
       "testimonials": true,
       "portfolioCount": 3
