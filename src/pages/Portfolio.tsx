@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Image as ImageIcon, ExternalLink } from 'lucide-react';
 import CursorGlow from '../components/CursorGlow';
 
-interface FlickrItem {
+interface GalleryItem {
   id: string;
   title: string;
   image_url: string;
@@ -11,46 +11,78 @@ interface FlickrItem {
   category: string;
   tags?: string[];
   published_at?: string;
+  source: 'admin' | 'flickr';
 }
 
 export default function Portfolio() {
-  const [items, setItems] = useState<FlickrItem[]>([]);
-  const [filteredItems, setFilteredItems] = useState<FlickrItem[]>([]);
+  const [items, setItems] = useState<GalleryItem[]>([]);
+  const [filteredItems, setFilteredItems] = useState<GalleryItem[]>([]);
   const [activeCategory, setActiveCategory] = useState('All');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchFlickr() {
+    async function fetchAll() {
       try {
-        const res = await fetch('/api/flickr');
-        if (res.ok) {
-          const data = await res.json();
-          const normalized = data.map((item: FlickrItem) => ({
-            ...item,
-            category: 'Flickr Stream'
-          }));
-          setItems(normalized);
-          setFilteredItems(normalized);
+        const [portfolioRes, flickrRes] = await Promise.all([
+          fetch('/api/portfolio'),
+          fetch('/api/flickr'),
+        ]);
+
+        const combined: GalleryItem[] = [];
+
+        // Admin-managed portfolio items
+        if (portfolioRes.ok) {
+          const portfolioData = await portfolioRes.json();
+          portfolioData.forEach((item: any) => {
+            combined.push({
+              id: item.id,
+              title: item.title,
+              image_url: item.image_url,
+              description: item.description,
+              category: item.category || 'Portfolio',
+              tags: item.tags || [],
+              published_at: item.published_at,
+              source: 'admin',
+            });
+          });
         }
+
+        // Flickr live stream items
+        if (flickrRes.ok) {
+          const flickrData = await flickrRes.json();
+          flickrData.forEach((item: any) => {
+            combined.push({
+              ...item,
+              category: 'Flickr Stream',
+              source: 'flickr',
+            });
+          });
+        }
+
+        setItems(combined);
+        setFilteredItems(combined);
       } catch (error) {
-        console.error("Failed to load Flickr images:", error);
+        console.error("Failed to load gallery:", error);
       } finally {
         setLoading(false);
       }
     }
-    fetchFlickr();
+    fetchAll();
   }, []);
 
   useEffect(() => {
     if (activeCategory === 'All') {
       setFilteredItems(items);
     } else {
-      setFilteredItems(items.filter(item => item.category.toLowerCase() === activeCategory.toLowerCase()));
+      setFilteredItems(items.filter(item =>
+        item.category.toLowerCase() === activeCategory.toLowerCase() ||
+        (item.tags && item.tags.some(t => t.toLowerCase() === activeCategory.toLowerCase()))
+      ));
     }
   }, [activeCategory, items]);
 
-  // Extract unique tags as categories for filtering
-  const allTags = [...new Set(items.flatMap(item => item.tags || []))];
+  // Extract unique categories from both sources
+  const allCategories = [...new Set(items.map(item => item.category))];
 
   return (
     <div className="bg-background text-foreground min-h-screen pt-32 pb-24 relative overflow-hidden">
@@ -70,7 +102,7 @@ export default function Portfolio() {
         </p>
       </section>
 
-      {/* Tag Filters */}
+      {/* Category Filters */}
       {!loading && items.length > 0 && (
         <section className="w-full px-6 sm:px-12 mb-12 flex flex-wrap justify-center gap-3">
           <button
@@ -83,17 +115,17 @@ export default function Portfolio() {
           >
             All
           </button>
-          {allTags.slice(0, 8).map(tag => (
+          {allCategories.slice(0, 10).map(cat => (
             <button
-              key={tag}
-              onClick={() => setActiveCategory(tag)}
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
               className={`px-5 py-2.5 rounded-full text-xs uppercase tracking-widest font-semibold border transition-all cursor-pointer ${
-                activeCategory === tag
+                activeCategory === cat
                   ? 'bg-primary border-primary text-black font-bold shadow-md'
                   : 'bg-white/5 border-white/10 text-gray-400 hover:text-white hover:border-white/25'
               }`}
             >
-              #{tag}
+              {cat === 'Flickr Stream' ? '📷 Live Feed' : cat}
             </button>
           ))}
         </section>
@@ -144,10 +176,11 @@ export default function Portfolio() {
                             const target = e.currentTarget;
                             target.src = 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=800&auto=format&fit=crop';
                           }}
-                        />
-                        <span className="absolute top-4 left-4 bg-black/80 border border-white/10 text-[8.5px] uppercase tracking-widest font-mono font-bold px-3 py-1 rounded-full text-primary">
-                          Live Still
-                        </span>
+                        />                          <span className={`absolute top-4 left-4 bg-black/80 border border-white/10 text-[8.5px] uppercase tracking-widest font-mono font-bold px-3 py-1 rounded-full ${
+                            item.source === 'admin' ? 'text-primary border-primary/30' : 'text-gray-300'
+                          }`}>
+                            {item.source === 'admin' ? 'Portfolio' : '📷 Live Feed'}
+                          </span>
                       </div>
 
                       <div className="p-6 space-y-3">

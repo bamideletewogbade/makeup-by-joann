@@ -4,7 +4,7 @@ import {
   LayoutDashboard, Palette, Image, FileText, MessageSquare,
   Settings, LogOut, Menu, X, Mail, Star, Plus, Pencil, Trash2,
   Upload, ExternalLink, Search, Calendar,
-  Phone, CheckCircle, Clock, Sparkles
+  Phone, CheckCircle, Clock, Sparkles, Download, MessageCircle
 } from 'lucide-react'
 
 // ─── Types ───
@@ -273,6 +273,7 @@ export default function Admin() {
   // Search / filter
   const [search, setSearch] = useState('')
   const [filterStatus, setFilterStatus] = useState('all')
+  const [lastRefreshed, setLastRefreshed] = useState<string | null>(null)
 
   const toggle = (type: string, data?: any) => setModal({ open: true, type, data })
   const closeModal = () => setModal({ open: false, type: '', data: undefined })
@@ -340,6 +341,7 @@ export default function Admin() {
       ])
       setServices(s); setPortfolio(p); setBlogs(b); setTestimonials(t)
       setInquiries(i); setStats(st); setSettings(set)
+      setLastRefreshed(new Date().toLocaleTimeString())
     } catch (err) {
       console.error('Failed to load admin data:', err)
     }
@@ -403,6 +405,34 @@ export default function Admin() {
   const saveSettings = async (data: any) => {
     await api('/api/settings', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
     setSettings(data); closeModal()
+  }
+
+  // ─── CSV Export ───
+  const exportCSV = () => {
+    const headers = ['Name', 'Email', 'Phone', 'Event Type', 'Event Date', 'Budget', 'Status', 'Score', 'Tags', 'Message', 'Created At', 'Notes']
+    const rows = inquiries.map(inq => [
+      inq.name,
+      inq.email,
+      inq.phone || '',
+      inq.event_type || '',
+      inq.event_date || '',
+      inq.budget_range || '',
+      inq.status,
+      String(inq.score),
+      (inq.ai_tags || []).join('; '),
+      `"${(inq.message || '').replace(/"/g, '""')}"`,
+      inq.created_at || '',
+      `"${(inq.notes || '').replace(/"/g, '""')}"`
+    ])
+
+    const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n')
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `inquiries-export-${new Date().toISOString().split('T')[0]}.csv`
+    a.click()
+    URL.revokeObjectURL(url)
   }
 
   // ─── Login Screen ───
@@ -535,9 +565,14 @@ export default function Admin() {
                   <h1 className="font-heading text-2xl font-semibold text-foreground">Dashboard</h1>
                   <p className="text-xs text-gray-500 mt-1">Overview of your content and leads</p>
                 </div>
-                <button onClick={loadData} className="text-xs text-gray-500 hover:text-primary transition-all px-3 py-1.5 rounded-lg border border-white/5 hover:border-primary/20 cursor-pointer">
-                  Refresh
-                </button>
+                <div className="flex items-center gap-3">
+                  {lastRefreshed && (
+                    <span className="text-[10px] text-gray-600">Last refreshed: {lastRefreshed}</span>
+                  )}
+                  <button onClick={loadData} className="text-xs text-gray-500 hover:text-primary transition-all px-3 py-1.5 rounded-lg border border-white/5 hover:border-primary/20 cursor-pointer">
+                    Refresh
+                  </button>
+                </div>
               </div>
 
               <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
@@ -787,6 +822,15 @@ export default function Admin() {
                   <p className="text-xs text-gray-500 mt-1">{inquiries.length} total</p>
                 </div>
                 <div className="flex items-center gap-3">
+                  {inquiries.length > 0 && (
+                    <button
+                      onClick={exportCSV}
+                      className="flex items-center gap-1.5 px-3 py-2 bg-white/5 border border-white/10 hover:bg-white/10 rounded-xl text-xs text-gray-300 transition-all cursor-pointer"
+                      title="Export to CSV"
+                    >
+                      <Download size={14} /> Export CSV
+                    </button>
+                  )}
                   <div className="relative">
                     <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
                     <input
@@ -859,7 +903,7 @@ export default function Admin() {
                         </div>
                       )}
 
-                      <div className="flex items-center gap-2 pt-1">
+                      <div className="flex items-center gap-2 pt-1 flex-wrap">
                         {inq.status !== 'contacted' && (
                           <button onClick={() => updateInquiryStatus(inq.id, 'contacted')} className="px-3 py-1.5 text-[10px] bg-yellow-500/10 text-yellow-400 hover:bg-yellow-500/20 rounded-lg transition-all cursor-pointer flex items-center gap-1">
                             <Phone size={10} /> Mark Contacted
@@ -881,6 +925,15 @@ export default function Admin() {
                         }} className="px-3 py-1.5 text-[10px] bg-white/5 text-gray-400 hover:bg-white/10 rounded-lg transition-all cursor-pointer flex items-center gap-1">
                           <FileText size={10} /> Notes
                         </button>
+                        <a
+                          href={`https://wa.me/2349130888823?text=Hi%20${encodeURIComponent(inq.name)}!%20This%20is%20Joann%20from%20Beauty%20By%20Joann.%20I%20got%20your%20inquiry%20about%20${encodeURIComponent(inq.event_type || 'makeup services')}.%20I'd%20love%20to%20discuss%20it%20further!`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-3 py-1.5 text-[10px] bg-[#25D366]/10 text-[#25D366] hover:bg-[#25D366]/20 rounded-lg transition-all cursor-pointer flex items-center gap-1"
+                          title="Message on WhatsApp"
+                        >
+                          <MessageCircle size={10} /> WhatsApp
+                        </a>
                       </div>
                     </motion.div>
                   ))}

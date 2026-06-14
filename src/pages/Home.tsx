@@ -740,7 +740,7 @@ export default function Home({ onNavigate }: HomeProps) {
               </p>
             </div>
             <a
-              href="https://wa.me/233501234567?text=Hi%20Joann!%20I'd%20love%20to%20chat%20about%20your%20makeup%20services."
+              href="https://wa.me/2349130888823?text=Hi%20Joann!%20I'd%20love%20to%20chat%20about%20your%20makeup%20services."
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-3 px-8 py-4 bg-[#25D366] hover:bg-[#20BD5A] text-white text-xs uppercase tracking-widest font-bold rounded-xl transition-all shadow-lg shadow-[#25D366]/20"

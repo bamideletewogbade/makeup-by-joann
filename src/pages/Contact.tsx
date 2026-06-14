@@ -133,7 +133,7 @@ export default function Contact() {
             </p>
           </div>
           <a
-            href="https://wa.me/233501234567?text=Hi%20Joann!%20I%20just%20sent%20a%20message%20through%20your%20website."
+            href="https://wa.me/2349130888823?text=Hi%20Joann!%20I%20just%20sent%20a%20message%20through%20your%20website."
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-6 py-3 bg-[#25D366] hover:bg-[#20BD5A] text-white text-xs uppercase tracking-widest font-bold rounded-xl transition-all"
@@ -300,7 +300,7 @@ export default function Contact() {
               </div>
             </div>
             <a
-              href="https://wa.me/233501234567?text=Hi%20Joann!%20I'd%20love%20to%20chat%20about%20your%20makeup%20services."
+              href="https://wa.me/2349130888823?text=Hi%20Joann!%20I'd%20love%20to%20chat%20about%20your%20makeup%20services."
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#25D366] hover:bg-[#20BD5A] text-white text-xs uppercase tracking-widest font-bold rounded-xl transition-all w-full justify-center shadow-lg"

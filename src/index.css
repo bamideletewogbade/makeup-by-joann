@@ -1,9 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
   --font-heading: "Playfair Display", serif;
-  --font-sans: "Poppins", "Inter", sans-serif;
+  --font-sans: "Inter", "Poppins", system-ui, sans-serif;
+  
+  /* Larger base font sizes for readability */
+  --font-size-xs: 0.8125rem;
+  --font-size-sm: 0.9375rem;
+  --font-size-base: 1.0625rem;
   
   --color-primary: #D4A373;
   --color-background: #0A0A0A;
@@ -36,6 +41,7 @@
 
 html {
   scroll-behavior: smooth;
+  font-size: 17px;
 }
 
 body {
@@ -46,6 +52,25 @@ body {
   -moz-osx-font-smoothing: grayscale;
   margin: 0;
   overflow-x: hidden;
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+/* Increase default paragraph and body text sizes */
+p, li, .text-body {
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+/* Ensure headings have good weight for legibility */
+h1, h2, h3, h4, .font-heading {
+  font-family: var(--font-heading);
+  letter-spacing: -0.01em;
+}
+
+/* Slightly increase letter-spacing on small uppercase text for readability */
+.uppercase.tracking-widest {
+  letter-spacing: 0.12em;
 }
 
 h1, h2, h3, h4, .font-heading {

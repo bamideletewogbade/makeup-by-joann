@@ -418,7 +418,7 @@ export default function Book() {
         <div className="mt-8 text-center">
           <p className="text-[10px] text-zinc-500 font-light mb-3">Prefer to chat?</p>
           <a
-            href="https://wa.me/233501234567?text=Hi%20Joann!%20I'd%20like%20to%20book%20a%20consultation."
+            href="https://wa.me/2349130888823?text=Hi%20Joann!%20I'd%20like%20to%20book%20a%20consultation."
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-5 py-3 bg-[#25D366] hover:bg-[#20BD5A] text-white text-xs uppercase tracking-widest font-bold rounded-xl transition-all"

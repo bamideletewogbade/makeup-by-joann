@@ -13,6 +13,7 @@ import Contact from './pages/Contact'
 import StyleQuiz from './pages/StyleQuiz'
 import VirtualTryOn from './pages/VirtualTryOn'
 import CreativeLab from './pages/CreativeLab'
+import Blog from './pages/Blog'
 import Admin from './pages/Admin'
 
 const pageVariants = {
@@ -62,6 +63,7 @@ export default function App() {
             <Route path="/style-quiz" element={<AnimatedPage><StyleQuiz /></AnimatedPage>} />
             <Route path="/creative-lab" element={<AnimatedPage><CreativeLab /></AnimatedPage>} />
             <Route path="/virtual-try-on" element={<AnimatedPage><VirtualTryOn /></AnimatedPage>} />
+            <Route path="/blog" element={<AnimatedPage><Blog /></AnimatedPage>} />
             <Route path="/admin" element={<Admin />} />
           </Routes>
         </AnimatePresence>

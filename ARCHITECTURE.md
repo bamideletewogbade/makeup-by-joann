@@ -104,6 +104,7 @@ Vite proxies `/api/*` requests to the Express server at `http://localhost:3001`.
 
 See [BUSINESS_CONTEXT.md](./BUSINESS_CONTEXT.md) for brand guidelines and feature roadmap.
 
+
 - **Images:** Populate portfolio with real images, wire Flickr API
 - **Contact:** Connect form to email service (e.g., SendGrid, Resend)
 - **AI Features:** Style quiz, beauty assistant
